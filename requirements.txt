@@ -1,0 +1,7 @@
+fitdecode
+pandas
+numpy
+scipy
+statsmodels
+matplotlib
+jupyter
