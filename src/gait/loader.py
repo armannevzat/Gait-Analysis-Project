@@ -40,3 +40,31 @@ def load_fit(path):
     df = pd.DataFrame(rows)
     df["activity_id"] = path.name.split(".")[0]
     return df
+
+
+def load_device(path):
+    """Extract recording device and paired sensors from one FIT file."""
+    path = Path(path)
+    opener = gzip.open if path.suffix == ".gz" else open
+
+    watch, serial, sensors = None, None, set()
+    with opener(path, "rb") as f:
+        with fitdecode.FitReader(f) as fit:
+            for frame in fit:
+                if not isinstance(frame, fitdecode.FitDataMessage):
+                    continue
+                if frame.name == "file_id" and watch is None:
+                    watch = _first_value(frame, ["garmin_product", "product"])
+                    serial = frame.get_value("serial_number", fallback=None)
+                elif frame.name == "device_info":
+                    product = _first_value(frame, ["garmin_product", "product"])
+                    dtype = _first_value(frame, ["antplus_device_type", "device_type"])
+                    if product is not None or dtype is not None:
+                        sensors.add(f"{product}:{dtype}")
+
+    return {
+        "activity_id": path.name.split(".")[0],
+        "watch": watch,
+        "serial": serial,
+        "sensors": "|".join(sorted(str(s) for s in sensors)),
+    }
