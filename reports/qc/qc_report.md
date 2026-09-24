@@ -15,6 +15,15 @@ Source: Strava bulk export, original Garmin `.fit` files.
 | 2025 | 149 | 511,942 | 1.0 | 100.0 | 149 | 149 | 145 | 17 | 1.4 | 1,449.7 |
 | 2026 | 88 | 292,339 | 1.0 | 100.0 | 88 | 88 | 78 | 10 | 0.5 | 856.8 |
 
+| 2026 | 88 | 292,339 | 1.0 | 100.0 | 88 | 88 | 78 | 10 | 0.5 | 856.8 |
+
+Note: distances here are total recorded activity distance at parse time. Activity
+12671640206 (July 2024) is an Olympic-distance triathlon whose 52.1 km includes the
+swim and bike legs; running volume reported in the write-up counts only its 10.35 km
+run leg, giving 1,152 km for 2024. See `docs/decisions.md`, 2026-09-23.
+
+## How the 408 were selected
+
 ## How the 408 were selected
 
 | Step | Activities remaining |
